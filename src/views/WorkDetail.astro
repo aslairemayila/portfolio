@@ -72,7 +72,15 @@ const { Content } = await render(entry);
 
 	.tags {
 		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		max-width: 100%;
 		gap: 0.5rem;
+	}
+
+	.tags :global(.pill) {
+		padding: 0.25rem 0.75rem;
+		font-size: var(--text-sm);
 	}
 
 	.description {
@@ -81,7 +89,10 @@ const { Content } = await render(entry);
 	}
 
 	.content {
-		max-width: 65ch;
+		max-width: min(65ch, 100%);
+		width: 100%;
+		min-width: 0;
+		overflow-wrap: anywhere;
 		margin-inline: auto;
 	}
 
@@ -98,6 +109,8 @@ const { Content } = await render(entry);
 	}
 
 	.content :global(img) {
+		max-width: 100%;
+		height: auto;
 		border-radius: 1.5rem;
 		box-shadow: var(--shadow-sm);
 		background: var(--gradient-subtle);
@@ -129,6 +142,15 @@ const { Content } = await render(entry);
 	}
 
 	@media (min-width: 50em) {
+		.tags {
+			justify-content: flex-start;
+		}
+
+		.tags :global(.pill) {
+			padding: 0.5rem 1rem;
+			font-size: var(--text-md);
+		}
+
 		.back-link {
 			display: block;
 			align-self: flex-start;
