@@ -1,0 +1,231 @@
+---
+import CallToAction from '../components/CallToAction.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import Experience from '../components/Experience.astro';
+import Grid from '../components/Grid.astro';
+import Hero from '../components/Hero.astro';
+import Icon from '../components/Icon.astro';
+import Pill from '../components/Pill.astro';
+import Portrait from '../components/Portrait.astro';
+import PortfolioPreview from '../components/PortfolioPreview.astro';
+import Skills from '../components/Skills.astro';
+import Technologies from '../components/Technologies.astro';
+import { getFeaturedWork, getLang, localePath, useTranslations } from '../i18n/utils';
+import { SHOW_CV } from '../config';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lang = getLang(Astro.url);
+const t = useTranslations(lang);
+
+// Projets mis en avant : champ `featured`, classés par `order`
+const projects = await getFeaturedWork(lang);
+---
+
+<BaseLayout>
+	<div class="stack gap-20 lg:gap-48">
+		<div class="wrapper stack gap-8 lg:gap-20">
+			<header class="hero">
+				<Hero title={t('home.title')} tagline={t('home.tagline')} align="start">
+					<div class="roles">
+						<Pill>{t('home.badge1')}</Pill>
+						<Pill>{t('home.badge2')}</Pill>
+						<Pill>{t('home.badge3')}</Pill>
+						<Pill>{t('home.badge4')}</Pill>
+					</div>
+					{SHOW_CV && (
+						<div class="actions">
+							<CallToAction href="/cv.pdf" download>
+								{t('cta.cv')}
+								<Icon icon="arrow-right" size="1.2em" />
+							</CallToAction>
+						</div>
+					)}
+				</Hero>
+				<Portrait variant="hero" />
+			</header>
+
+			<Skills />
+		</div>
+
+		<main class="wrapper stack gap-20 lg:gap-48">
+			<section class="section with-background with-cta">
+				<header class="section-header stack gap-2 lg:gap-4" data-reveal>
+					<h3>{t('projects.title')}</h3>
+					<p>{t('projects.text')}</p>
+				</header>
+
+				<div class="gallery">
+					<Grid variant="offset">
+						{projects.map((project) => (
+							<li data-reveal>
+								<PortfolioPreview project={project} />
+							</li>
+						))}
+					</Grid>
+				</div>
+
+				<div class="cta" data-reveal>
+					<CallToAction href={localePath(lang, '/work/')}>
+						{t('cta.viewAll')}
+						<Icon icon="arrow-right" size="1.2em" />
+					</CallToAction>
+				</div>
+			</section>
+
+			<Technologies />
+
+			<Experience />
+		</main>
+
+		<ContactCTA />
+	</div>
+</BaseLayout>
+
+<style>
+	.hero {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	.roles {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 0.5rem;
+	}
+
+	.roles :global(.pill) {
+		font-size: var(--text-sm);
+		background-color: transparent;
+		color: var(--link-color);
+	}
+
+	.roles :global(.pill:hover) {
+		background-color: var(--accent-regular);
+		border-color: var(--accent-regular);
+		color: var(--accent-text-over);
+	}
+
+	.actions {
+		margin-top: 1rem;
+		display: flex;
+	}
+
+	.hero :global(.portrait) {
+		order: -1;
+	}
+
+	@media (min-width: 50em) {
+		.hero {
+			display: grid;
+			grid-template-columns: 6fr 4fr;
+			align-items: center;
+			padding-inline: 2.5rem;
+			gap: 3.75rem;
+		}
+
+		.hero :global(.portrait) {
+			order: 0;
+		}
+	}
+
+	/* ====================================================== */
+
+	.section {
+		display: grid;
+		gap: 2rem;
+	}
+
+	.with-background {
+		position: relative;
+	}
+
+	.with-background::before {
+		--hero-bg: var(--bg-image-subtle-2);
+
+		content: '';
+		position: absolute;
+		pointer-events: none;
+		left: 50%;
+		width: 100vw;
+		aspect-ratio: calc(2.25 / var(--bg-scale));
+		top: 0;
+		transform: translateY(-75%) translateX(-50%);
+		background: var(--hero-bg) center center / var(--bg-gradient-size) no-repeat;
+		z-index: -1;
+	}
+
+	.with-background.bg-variant::before {
+		--hero-bg: var(--bg-image-subtle-1);
+	}
+
+	.section-header {
+		justify-self: center;
+		text-align: center;
+		max-width: 50ch;
+		font-size: var(--text-md);
+		color: var(--gray-300);
+	}
+
+	.section-header h3 {
+		font-size: var(--text-2xl);
+	}
+
+	@media (min-width: 50em) {
+		.section {
+			grid-template-columns: repeat(4, 1fr);
+			grid-template-areas: 'header header header header' 'gallery gallery gallery gallery';
+			gap: 5rem;
+		}
+
+		.section.with-cta {
+			grid-template-areas: 'header header header cta' 'gallery gallery gallery gallery';
+		}
+
+		.section-header {
+			grid-area: header;
+			font-size: var(--text-lg);
+		}
+
+		.section-header h3 {
+			font-size: var(--text-4xl);
+		}
+
+		.with-cta .section-header {
+			justify-self: flex-start;
+			text-align: left;
+		}
+
+		.gallery {
+			grid-area: gallery;
+		}
+
+		.cta {
+			grid-area: cta;
+		}
+	}
+
+	/* ====================================================== */
+
+	.mention-card {
+		display: flex;
+		height: 7rem;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		border: 1px solid var(--gray-800);
+		border-radius: 1.5rem;
+		color: var(--gray-300);
+		background: var(--gradient-subtle);
+		box-shadow: var(--shadow-sm);
+	}
+
+	@media (min-width: 50em) {
+		.mention-card {
+			border-radius: 1.5rem;
+			height: 9.5rem;
+		}
+	}
+</style>

@@ -1,0 +1,11 @@
+---
+import Hero from '../components/Hero.astro';
+import { getLang, useTranslations } from '../i18n/utils';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const t = useTranslations(getLang(Astro.url));
+---
+
+<BaseLayout title={t('404.title')} description={t('404.description')}>
+	<Hero title={t('404.title')} tagline={t('404.text')} />
+</BaseLayout>

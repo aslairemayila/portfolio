@@ -1,0 +1,80 @@
+---
+import { getLang, localePath, useTranslations } from '../i18n/utils';
+import { SHOW_CV } from '../config';
+import Icon from './Icon.astro';
+
+const lang = getLang(Astro.url);
+const t = useTranslations(lang);
+const currentYear = new Date().getFullYear();
+---
+
+<footer>
+	<div class="group">
+		<p>
+			{t('footer.made')} <a href="https://astro.build/">Astro</a>
+			<Icon icon="rocket-launch" size="1.2em" />
+		</p>
+		<p>&copy; {currentYear} Aslaire Mayila</p>
+	</div>
+	<p class="socials">
+		<a href="https://linkedin.com/in/aslaire-mayila-a82388273">LinkedIn</a>
+		<a href="https://github.com/aslairemayila">GitHub</a>
+		<a href="mailto:aslairemayila@gmail.com">aslairemayila@gmail.com</a>
+		{SHOW_CV && <a href="/cv.pdf" download>{t('footer.cv')}</a>}
+	</p>
+</footer>
+<style>
+	footer {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+		margin-top: auto;
+		padding: 3rem 2rem 3rem;
+		text-align: center;
+		color: var(--gray-400);
+		font-size: var(--text-sm);
+	}
+
+	footer a {
+		color: var(--gray-400);
+		text-decoration: 1px solid underline transparent;
+		text-underline-offset: 0.25em;
+		transition: text-decoration-color var(--theme-transition);
+	}
+
+	footer a:hover,
+	footer a:focus {
+		text-decoration-color: currentColor;
+	}
+
+	.group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.socials {
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	@media (min-width: 50em) {
+		footer {
+			flex-direction: row;
+			justify-content: space-between;
+			padding: 2.5rem 5rem;
+		}
+
+		.group {
+			flex-direction: row;
+			gap: 1rem;
+			flex-wrap: wrap;
+		}
+
+		.socials {
+			justify-content: flex-end;
+		}
+	}
+</style>

@@ -1,0 +1,160 @@
+---
+import { technologies } from '../data/technologies';
+import { getLang, useTranslations } from '../i18n/utils';
+
+const t = useTranslations(getLang(Astro.url));
+---
+
+<section class="technologies" id="technologies">
+	<header class="section-header stack gap-2" data-reveal>
+		<p class="eyebrow">{t('tech.eyebrow')}</p>
+		<h3>{t('tech.title')}</h3>
+	</header>
+
+	<div class="categories">
+		{
+			technologies.map((category) => (
+				<article class="category" data-reveal>
+					<h4>{t(category.title)}</h4>
+					<ul class="tiles">
+						{category.items.map((tech) => (
+							<li class="tile" title={tech.name}>
+								<img
+									src={`/assets/tech/${tech.icon}.svg`}
+									alt=""
+									width="40"
+									height="40"
+									loading="lazy"
+									class:list={{ 'invert-dark': tech.invertOnDark }}
+								/>
+								<span>{tech.name}</span>
+							</li>
+						))
+						}
+					</ul>
+				</article>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.technologies {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+	}
+
+	.section-header {
+		text-align: center;
+		justify-self: center;
+	}
+
+	.section-header h3 {
+		font-size: var(--text-2xl);
+	}
+
+	.categories {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: 1fr;
+	}
+
+	.category {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		padding: 1.5rem;
+		border: 1px solid var(--gray-800);
+		border-radius: 1rem;
+		background-color: var(--gray-999_40);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.category h4 {
+		font-size: var(--text-md);
+		color: var(--gray-100);
+	}
+
+	.tiles {
+		list-style: none;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+		gap: 0.75rem;
+	}
+
+	.tile {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 0.5rem;
+		padding: 0.875rem 0.5rem;
+		text-align: center;
+		font-size: var(--text-sm);
+		line-height: 1.2;
+		color: var(--gray-300);
+		border: 1px solid var(--gray-800);
+		border-radius: 0.75rem;
+		background: var(--gray-900);
+		transition:
+			transform 0.25s ease,
+			border-color 0.25s ease,
+			box-shadow 0.25s ease,
+			color 0.25s ease;
+	}
+
+	.tile img {
+		width: 2.5rem;
+		height: 2.5rem;
+		object-fit: contain;
+		transition: transform 0.25s ease;
+	}
+
+	:global(:root.theme-dark) .invert-dark {
+		filter: invert(1);
+	}
+
+	.tile:hover {
+		transform: translateY(-4px);
+		border-color: var(--accent-dark);
+		color: var(--gray-0);
+		box-shadow:
+			0 0 0 1px var(--accent-dark),
+			0 8px 24px -8px hsla(190, 90%, 50%, 0.45);
+	}
+
+	.tile:hover img {
+		transform: scale(1.15);
+	}
+
+	@media (min-width: 50em) {
+		.section-header h3 {
+			font-size: var(--text-4xl);
+		}
+
+		.categories {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1.5rem;
+		}
+
+		.category {
+			padding: 2rem;
+			border-radius: 1.5rem;
+		}
+	}
+
+	@media (min-width: 70em) {
+		.categories {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.tile:hover,
+		.tile:hover img {
+			transform: none;
+		}
+	}
+</style>

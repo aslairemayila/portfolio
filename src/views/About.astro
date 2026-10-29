@@ -1,0 +1,178 @@
+---
+import CallToAction from '../components/CallToAction.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import Hero from '../components/Hero.astro';
+import Portrait from '../components/Portrait.astro';
+import Icon from '../components/Icon.astro';
+import { getLang, useTranslations } from '../i18n/utils';
+import { SHOW_CV } from '../config';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const t = useTranslations(getLang(Astro.url));
+---
+
+<BaseLayout title={t('about.pageTitle')} description={t('about.description')}>
+	<div class="stack gap-20">
+		<main class="wrapper about">
+			<div class="intro">
+				<Portrait variant="small" />
+				<Hero title={t('about.title')} tagline={t('about.intro')} align="start">
+					{SHOW_CV && (
+						<div class="cv">
+							<CallToAction href="/cv.pdf" download>
+								{t('cta.cv')}
+								<Icon icon="arrow-right" size="1.2em" />
+							</CallToAction>
+						</div>
+					)}
+				</Hero>
+			</div>
+
+			<section data-reveal>
+				<h2 class="section-title">{t('about.career.title')}</h2>
+				<div class="content">
+					<p>{t('about.career.text')}</p>
+				</div>
+			</section>
+			<section data-reveal>
+				<h2 class="section-title">{t('about.traits.title')}</h2>
+				<div class="content">
+					<p>{t('about.traits.text')}</p>
+				</div>
+			</section>
+			<section data-reveal>
+				<h2 class="section-title">{t('about.education.title')}</h2>
+				<div class="content">
+					<ul>
+						<li set:html={t('about.education.1')} />
+						<li set:html={t('about.education.2')} />
+					</ul>
+				</div>
+			</section>
+			<section data-reveal>
+				<h2 class="section-title">{t('about.skills.title')}</h2>
+				<div class="content">
+					<ul>
+						<li set:html={t('about.skills.1')} />
+						<li set:html={t('about.skills.2')} />
+						<li set:html={t('about.skills.3')} />
+						<li set:html={t('about.skills.4')} />
+						<li set:html={t('about.skills.5')} />
+						<li set:html={t('about.skills.6')} />
+					</ul>
+				</div>
+			</section>
+			<section data-reveal>
+				<h2 class="section-title">{t('about.outside.title')}</h2>
+				<div class="content">
+					<p>{t('about.outside.text')}</p>
+				</div>
+			</section>
+			<section data-reveal>
+				<h2 class="section-title">{t('about.contact.title')}</h2>
+				<div class="content">
+					<ul>
+						<li>
+							LinkedIn :
+							<a href="https://linkedin.com/in/aslaire-mayila-a82388273"
+								>linkedin.com/in/aslaire-mayila-a82388273</a
+							>
+						</li>
+						<li>
+							GitHub :
+							<a href="https://github.com/aslairemayila">github.com/aslairemayila</a>
+						</li>
+						<li>E-mail : <a href="mailto:aslairemayila@gmail.com">aslairemayila@gmail.com</a></li>
+						{SHOW_CV && (
+							<li>
+								CV : <a href="/cv.pdf" download>{t('about.contact.cv')}</a>
+							</li>
+						)}
+					</ul>
+				</div>
+			</section>
+		</main>
+
+		<ContactCTA />
+	</div>
+</BaseLayout>
+
+<style>
+	.about {
+		display: flex;
+		flex-direction: column;
+		gap: 3.5rem;
+	}
+
+	.intro {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2rem;
+		text-align: center;
+	}
+
+	.cv {
+		display: flex;
+		justify-content: flex-start;
+		margin-top: 1rem;
+	}
+
+	.content ul {
+		padding-left: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		color: var(--gray-200);
+	}
+
+	.section-title {
+		grid-column-start: 1;
+		font-size: var(--text-xl);
+		color: var(--gray-0);
+	}
+
+	.content {
+		grid-column: 2 / 4;
+	}
+
+	.content :global(a) {
+		text-decoration: 1px solid underline transparent;
+		text-underline-offset: 0.25em;
+		transition: text-decoration-color var(--theme-transition);
+	}
+
+	.content :global(a:hover),
+	.content :global(a:focus) {
+		text-decoration-color: currentColor;
+	}
+
+	@media (min-width: 50em) {
+		.intro {
+			flex-direction: row;
+			align-items: center;
+			gap: 3rem;
+			text-align: start;
+		}
+
+		.about {
+			display: grid;
+			grid-template-columns: 1fr 60% 1fr;
+		}
+
+		.about > :global(:first-child) {
+			grid-column-start: 2;
+		}
+
+		section {
+			display: contents;
+			font-size: var(--text-lg);
+		}
+	}
+</style>

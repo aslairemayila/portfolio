@@ -1,0 +1,12 @@
+---
+import { workStaticPaths } from '../../../i18n/utils';
+import WorkDetail from '../../../views/WorkDetail.astro';
+
+export async function getStaticPaths() {
+	return workStaticPaths('en');
+}
+
+const { entry } = Astro.props;
+---
+
+<WorkDetail entry={entry} />

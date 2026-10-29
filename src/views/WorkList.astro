@@ -1,0 +1,28 @@
+---
+import ContactCTA from '../components/ContactCTA.astro';
+import Grid from '../components/Grid.astro';
+import Hero from '../components/Hero.astro';
+import PortfolioPreview from '../components/PortfolioPreview.astro';
+import { getLang, getSortedWork, useTranslations } from '../i18n/utils';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lang = getLang(Astro.url);
+const t = useTranslations(lang);
+const projects = await getSortedWork(lang);
+---
+
+<BaseLayout title={t('work.pageTitle')} description={t('work.description')}>
+	<div class="stack gap-20">
+		<main class="wrapper stack gap-8">
+			<Hero title={t('work.title')} tagline={t('work.tagline')} align="start" />
+			<Grid variant="offset">
+				{projects.map((project) => (
+					<li data-reveal>
+						<PortfolioPreview project={project} />
+					</li>
+				))}
+			</Grid>
+		</main>
+		<ContactCTA />
+	</div>
+</BaseLayout>

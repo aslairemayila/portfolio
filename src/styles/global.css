@@ -1,0 +1,307 @@
+/* Variables globales — thème « cyber » bleu cyan */
+:root {
+	/* Couleurs (mode clair) */
+	--gray-0: #07121a;
+	--gray-50: #0d1b27;
+	--gray-100: #172d3d;
+	--gray-200: #2a4558;
+	--gray-300: #3f6078;
+	--gray-400: #587a92;
+	--gray-500: #7898ae;
+	--gray-600: #9bb8cb;
+	--gray-700: #bfd5e2;
+	--gray-800: #dcebf3;
+	--gray-900: #eef6fa;
+	--gray-999-basis: 0, 0%, 100%;
+	--gray-999_40: hsla(var(--gray-999-basis), 0.4);
+	--gray-999: #ffffff;
+
+	--accent-light: #22d3ee;
+	--accent-regular: #0e7490;
+	--accent-dark: #083344;
+	--accent-overlay: hsla(190, 90%, 50%, 0.25);
+	--accent-subtle-overlay: var(--accent-overlay);
+	--accent-text-over: #ffffff;
+
+	--link-color: var(--accent-regular);
+
+	/* Dégradés */
+	--gradient-stop-1: var(--accent-light);
+	--gradient-stop-2: var(--accent-regular);
+	--gradient-stop-3: var(--accent-dark);
+	--gradient-subtle: linear-gradient(150deg, var(--gray-900) 19%, var(--gray-999) 150%);
+	--gradient-accent: linear-gradient(
+		150deg,
+		var(--gradient-stop-1),
+		var(--gradient-stop-2),
+		var(--gradient-stop-3)
+	);
+	--gradient-accent-orange: linear-gradient(
+		150deg,
+		#0891b2,
+		var(--accent-regular),
+		var(--accent-dark)
+	);
+	--gradient-stroke: linear-gradient(180deg, var(--gray-900), var(--gray-700));
+
+	/* Ombres */
+	--shadow-sm:
+		0px 6px 3px rgba(7, 18, 26, 0.01), 0px 4px 2px rgba(7, 18, 26, 0.01),
+		0px 2px 2px rgba(7, 18, 26, 0.02), 0px 0px 1px rgba(7, 18, 26, 0.03);
+	--shadow-md:
+		0px 28px 11px rgba(7, 18, 26, 0.01), 0px 16px 10px rgba(7, 18, 26, 0.03),
+		0px 7px 7px rgba(7, 18, 26, 0.05), 0px 2px 4px rgba(7, 18, 26, 0.06);
+	--shadow-lg:
+		0px 62px 25px rgba(7, 18, 26, 0.01), 0px 35px 21px rgba(7, 18, 26, 0.05),
+		0px 16px 16px rgba(7, 18, 26, 0.1), 0px 4px 9px rgba(7, 18, 26, 0.12);
+
+	/* Tailles de texte */
+	--text-sm: 0.875rem;
+	--text-base: 1rem;
+	--text-md: 1.125rem;
+	--text-lg: 1.25rem;
+	--text-xl: 1.625rem;
+	--text-2xl: 2.125rem;
+	--text-3xl: 2.625rem;
+	--text-4xl: 3.5rem;
+	--text-5xl: 4.5rem;
+
+	/* Polices */
+	--font-system:
+		system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+		"Open Sans", "Helvetica Neue", sans-serif;
+	--font-body: "IBM Plex Sans", var(--font-system);
+	--font-brand: "Space Grotesk", var(--font-system);
+
+	/* Transitions */
+	--theme-transition: 0.2s ease-in-out;
+}
+
+:root.theme-dark {
+	--gray-0: #ffffff;
+	--gray-50: #eef6fa;
+	--gray-100: #dcebf3;
+	--gray-200: #bfd5e2;
+	--gray-300: #9bb8cb;
+	--gray-400: #7898ae;
+	--gray-500: #587a92;
+	--gray-600: #3f6078;
+	--gray-700: #2a4558;
+	--gray-800: #172d3d;
+	--gray-900: #0d1b27;
+	--gray-999-basis: 209, 57%, 6%;
+	--gray-999: #060e16;
+
+	--accent-light: #083344;
+	--accent-regular: #0e7490;
+	--accent-dark: #22d3ee;
+	--accent-overlay: hsla(190, 90%, 50%, 0.25);
+	--accent-subtle-overlay: hsla(190, 90%, 40%, 0.25);
+	--accent-text-over: #ffffff;
+
+	--link-color: var(--accent-dark);
+
+	--gradient-stop-1: #0369a1;
+	--gradient-subtle: linear-gradient(150deg, var(--gray-900) 19%, var(--gray-999) 81%);
+	--gradient-accent-orange: linear-gradient(
+		150deg,
+		#06b6d4,
+		var(--accent-regular),
+		var(--accent-light)
+	);
+	--gradient-stroke: linear-gradient(180deg, var(--gray-600), var(--gray-800));
+
+	--shadow-sm:
+		0px 6px 3px rgba(34, 211, 238, 0.01), 0px 4px 2px rgba(34, 211, 238, 0.01),
+		0px 2px 2px rgba(34, 211, 238, 0.02), 0px 0px 1px rgba(34, 211, 238, 0.04);
+	--shadow-md:
+		0px 28px 11px rgba(34, 211, 238, 0.01), 0px 16px 10px rgba(34, 211, 238, 0.03),
+		0px 7px 7px rgba(34, 211, 238, 0.05), 0px 2px 4px rgba(34, 211, 238, 0.06);
+	--shadow-lg:
+		0px 62px 25px rgba(34, 211, 238, 0.01), 0px 35px 21px rgba(34, 211, 238, 0.05),
+		0px 16px 16px rgba(34, 211, 238, 0.08), 0px 4px 9px rgba(34, 211, 238, 0.1);
+}
+
+html,
+body {
+	min-height: 100%;
+	overflow-x: hidden;
+}
+
+body {
+	background-color: var(--gray-999);
+	color: var(--gray-200);
+	font-family: var(--font-body);
+	-webkit-font-smoothing: antialiased;
+	line-height: 1.5;
+}
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+a {
+	color: var(--link-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	line-height: 1.1;
+	font-family: var(--font-brand);
+	font-weight: 600;
+	color: var(--gray-100);
+}
+
+h1 {
+	font-size: var(--text-5xl);
+}
+
+h2 {
+	font-size: var(--text-4xl);
+}
+
+h3 {
+	font-size: var(--text-3xl);
+}
+
+h4 {
+	font-size: var(--text-2xl);
+}
+
+h5 {
+	font-size: var(--text-xl);
+}
+
+/* Utilities */
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
+
+.wrapper {
+	width: 100%;
+	max-width: 83rem;
+	margin-inline: auto;
+	padding-inline: 1.5rem;
+}
+
+.stack {
+	display: flex;
+	flex-direction: column;
+}
+
+.gap-2 {
+	gap: 0.5rem;
+}
+.gap-4 {
+	gap: 1rem;
+}
+.gap-8 {
+	gap: 2rem;
+}
+.gap-10 {
+	gap: 2.5rem;
+}
+.gap-15 {
+	gap: 3.75rem;
+}
+.gap-20 {
+	gap: 5rem;
+}
+.gap-30 {
+	gap: 7.5rem;
+}
+.gap-48 {
+	gap: 12rem;
+}
+
+@media (min-width: 50em) {
+	.lg\:gap-2 {
+		gap: 0.5rem;
+	}
+	.lg\:gap-4 {
+		gap: 1rem;
+	}
+	.lg\:gap-8 {
+		gap: 2rem;
+	}
+	.lg\:gap-10 {
+		gap: 2.5rem;
+	}
+	.lg\:gap-15 {
+		gap: 3.75rem;
+	}
+	.lg\:gap-20 {
+		gap: 5rem;
+	}
+	.lg\:gap-30 {
+		gap: 7.5rem;
+	}
+	.lg\:gap-48 {
+		gap: 12rem;
+	}
+}
+
+/* Apparition au défilement (actif seulement si JS est disponible) */
+.js [data-reveal] {
+	opacity: 0;
+	transform: translateY(24px);
+	transition:
+		opacity 0.6s ease-out var(--reveal-delay, 0ms),
+		transform 0.6s ease-out var(--reveal-delay, 0ms);
+}
+
+.js [data-reveal].is-visible {
+	opacity: 1;
+	transform: none;
+}
+
+/* Titre de section avec sur-titre */
+.eyebrow {
+	font-family: var(--font-brand);
+	font-size: var(--text-sm);
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	color: var(--link-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		transition-delay: 0ms !important;
+		scroll-behavior: auto !important;
+	}
+
+	.js [data-reveal] {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+html {
+	scroll-behavior: smooth;
+	scroll-padding-top: 2rem;
+}

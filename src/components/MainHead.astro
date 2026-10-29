@@ -1,0 +1,50 @@
+---
+import '../styles/global.css';
+import { getLang, useTranslations } from '../i18n/utils';
+
+interface Props {
+	title?: string | undefined;
+	description?: string | undefined;
+}
+
+const t = useTranslations(getLang(Astro.url));
+const { title = t('site.title'), description = t('site.description') } = Astro.props;
+---
+
+<meta charset="utf-8" />
+<meta name="description" property="og:description" content={description} />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<title>{title}</title>
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@500;600;700&display=swap"
+	rel="stylesheet"
+/>
+<script is:inline>
+	// Marque le document comme « JS actif » (pour les animations d'apparition).
+	document.documentElement.classList.add('js');
+
+	// Inlined in the head to make dark mode instant & blocking. Sombre par défaut.
+	const getThemePreference = () => {
+		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+			return localStorage.getItem('theme');
+		}
+		return 'dark';
+	};
+	const isDark = getThemePreference() === 'dark';
+	document.documentElement.classList[isDark ? 'add' : 'remove']('theme-dark');
+
+	if (typeof localStorage !== 'undefined') {
+		// Watch the document element and persist user preference when it changes.
+		const observer = new MutationObserver(() => {
+			const isDark = document.documentElement.classList.contains('theme-dark');
+			localStorage.setItem('theme', isDark ? 'dark' : 'light');
+		});
+		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+	}
+</script>

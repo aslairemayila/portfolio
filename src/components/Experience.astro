@@ -1,0 +1,197 @@
+---
+import { experiences } from '../data/experience';
+import { getLang, localePath, useTranslations } from '../i18n/utils';
+import Icon from './Icon.astro';
+import Pill from './Pill.astro';
+
+const lang = getLang(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="experience" id="experience">
+	<header class="section-header stack gap-2" data-reveal>
+		<p class="eyebrow">{t('exp.eyebrow')}</p>
+		<h3>{t('exp.title')}</h3>
+	</header>
+
+	<div class="list">
+		{
+			experiences.map((exp) => (
+				<article class="card" data-reveal>
+					<div class="top">
+						<div>
+							<h4>{exp.role[lang]}</h4>
+							<p class="company">
+								{exp.company} · {exp.location}
+							</p>
+						</div>
+						<p class="dates">{exp.dates[lang]}</p>
+					</div>
+					<p class="description">{exp.description[lang]}</p>
+					<ul class="badges">
+						{exp.badges.map((badge) => (
+							<li>
+								<Pill>{badge}</Pill>
+							</li>
+						))}
+					</ul>
+					<div class="links">
+						{exp.links.map((link) => (
+							<a href={localePath(lang, link.href)}>
+								{link.label[lang]}
+								<Icon icon="arrow-right" size="1.1em" />
+							</a>
+						))}
+					</div>
+				</article>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.experience {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+	}
+
+	.section-header {
+		text-align: center;
+		justify-self: center;
+	}
+
+	.section-header h3 {
+		font-size: var(--text-2xl);
+	}
+
+	.list {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		max-width: 60rem;
+		width: 100%;
+		margin-inline: auto;
+	}
+
+	.card {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		padding: 1.5rem;
+		border: 1px solid var(--gray-800);
+		border-radius: 1rem;
+		background-color: var(--gray-999_40);
+		box-shadow: var(--shadow-sm);
+		transition:
+			transform 0.3s ease,
+			border-color 0.3s ease,
+			box-shadow 0.3s ease;
+	}
+
+	.card:hover {
+		transform: translateY(-6px);
+		border-color: var(--accent-dark);
+		box-shadow:
+			var(--shadow-md),
+			0 0 0 1px var(--accent-dark),
+			0 12px 32px -8px hsla(190, 90%, 50%, 0.35);
+	}
+
+	.top {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	h4 {
+		font-size: var(--text-xl);
+		color: var(--gray-0);
+	}
+
+	.company {
+		color: var(--link-color);
+		font-weight: 600;
+	}
+
+	.dates {
+		color: var(--gray-400);
+		font-size: var(--text-sm);
+		font-family: var(--font-brand);
+		letter-spacing: 0.04em;
+	}
+
+	.description {
+		color: var(--gray-300);
+	}
+
+	.badges {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.badges :global(.pill) {
+		font-size: var(--text-sm);
+		padding: 0.25rem 0.75rem;
+		background-color: transparent;
+		color: var(--link-color);
+	}
+
+	.badges :global(.pill:hover) {
+		background-color: var(--accent-regular);
+		border-color: var(--accent-regular);
+		color: var(--accent-text-over);
+	}
+
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem 1.5rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--gray-800);
+	}
+
+	.links a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: 600;
+		text-decoration: none;
+		transition:
+			gap 0.2s ease,
+			color var(--theme-transition);
+	}
+
+	.links a:hover,
+	.links a:focus-visible {
+		gap: 0.85rem;
+		color: var(--gray-0);
+	}
+
+	@media (min-width: 50em) {
+		.section-header h3 {
+			font-size: var(--text-4xl);
+		}
+
+		.card {
+			padding: 2.25rem;
+			border-radius: 1.5rem;
+		}
+
+		.top {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: baseline;
+			gap: 1.5rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.card:hover {
+			transform: none;
+		}
+	}
+</style>
